@@ -1,0 +1,133 @@
+{% extends "base.html.twig" %}
+
+{% block styleSheets %}
+{% endblock %}
+
+{% block bodytag %}
+    onload="funcChar();"
+{% endblock %}
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2 class="fs-3">Alertes</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+                                <table id="datatable" class="table table-bordered bulk_action"
+                                       style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Emetteur</th>
+                                        <th>Objet</th>
+                                        <th>Heure d'envoi</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for contact in contacts %}
+                                        {% if contact.statut == "non lu" %}
+                                            <tr id="rt" style="background-color:lightgrey;cursor:pointer;"
+                                                onclick="lired();">
+                                                <td>{{ contact.emetteur }}</td>
+                                                <td>{{ contact.objet }}</td>
+                                                <td>{{ contact.heureEnvoi }}</td>
+                                            </tr>
+                                            {% elseif contact.statut == "lu" %}
+                                            <tr style="background-color:white;">
+                                                <td>{{ contact.emetteur }}</td>
+                                                <td>{{ contact.objet }}</td>
+                                                <td>{{ contact.heureEnvoi }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <script>
+                                        function lired() {
+                                            $(this).css('backgroundColor','white').css('cursor','auto');
+                                            // $.ajax({
+                                            //     url: '/liremsg/' + id + '/',
+                                            //     data: donnees,
+                                            //     success: function (data) {
+                                            //         alert("GG");
+                                            //     },
+                                            //     error: function (data) {
+                                            //         alert("ERREUR");
+                                            //     },
+                                            // });
+                                        }
+                                    </script>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {# #}
+                {# <div class="x_content"> #}
+                {# <div class="row"> #}
+                {# <div class="col-sm-12"> #}
+                {# <button type="button" onclick="funcCharger();"><span class="fa fa-refresh"></span></button> #}
+                {# <div class="card-box table-responsive"> #}
+                {# <table id="table1" class="table table-striped jambo_table bulk_action" #}
+                {# style="width: 100%"> #}
+                {# <thead> #}
+                {# <tr class="headings"> #}
+                {# <th class="column-title" style="width: 10%">Emetteur</th> #}
+                {# <th class="column-title">Objet</th> #}
+                {# <th class="column-title">Heure d'envoi</th> #}
+                {# </tr> #}
+                {# </thead> #}
+                {# </table> #}
+                {# </div> #}
+                {# <script> #}
+                {# function funcCharger() { #}
+                {# $.ajax({ #}
+                {# url: '/refreshAlerte/', #}
+                {# dataType: 'json', #}
+                {# async: true, #}
+                {# success: function (data) { #}
+                {# if (!data) { #}
+                {# var e = $('<tbody id="bodyTable"><tr><td class="text-center" colspan="3">Aucune notification a afficher</td></tr></tbody>'); #}
+                {# $('#table1').append(e); #}
+                {# } else { #}
+                {# var e = $('<tbody id="bodyTable"></tbody>'); #}
+                {# $('#table1').append(e); #}
+
+                {# for (var i = 0; i < data.length; i++) { #}
+                {# let contact = data[i]; #}
+                {# var e = $('<tr class="fs-6"><td class=" last" id="nom"></td>' + #}
+                {# '<td class=" last" id="objet"></td><td class=" last" id="heure"></td>'); #}
+
+                {# $('#nom', e).html(contact['nom']); #}
+                {# $('#objet', e).html(contact['objet']); #}
+                {# $('#heure', e).html(contact['heure']); #}
+                {# $('#bodyTable').append(e); #}
+                {# } #}
+                {# } #}
+                {# }, #}
+                {# error: function (data) { #}
+                {# alert('Aucun produit trouver !!'); #}
+                {# }, #}
+                {# }); #}
+                {# $('#bodyTable').remove(); #}
+                {# } #}
+
+                {# </script> #}
+                {# </div> #}
+                {# </div> #}
+                {# </div> #}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javaScripts %}
+
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends "base.html.twig" %}
+
+{% block styleSheets %}
+{% endblock %}
+
+{% block bodytag %}
+    onload="funcCharger();"
+{% endblock %}
+{% block content %}
+    <div class="right_col" role="main">
+        <h3>Liste diffusion</h3>
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Modifier la liste ayant le nom: {{ liste.nom }}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <form method="post" novalidate action="">
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="p-2 rounded w-100" style="border: 2px grey solid">
+                                    <form class="form-horizontal form-label-left">
+                                        <div class="center-margin">
+                                            <div class="form-group">
+                                                <label class="mt-2" for="nom">Nom: <span class="required">*</span></label>
+                                                <input type="text" id="nom" value="{{ liste.nom }}" name="nom"
+                                                       class="form-control">
+                                            </div>
+                                            <br>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 mt-4 col-sm-12  form-group">
+                                                    <label for="des">Description: <span class="required">*</span></label>
+                                                    <input type="text" id="des" value="{{ liste.description }}" name="des"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="col-md-6 mt-4 col-sm-12  form-group">
+                                                    <label for="liste">Abonnee
+                                                        :</label>
+                                                    <textarea id="liste"
+
+                                                              class="form-control"
+                                                              name="liste">{{ liste.abonnee }}</textarea>
+                                                    <p>Entrer la liste separer d'une virgule</p>
+                                                </div>
+                                                <br/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" onclick="fonct();"
+                                class="btn pull-right btn-success mt-3 w-auto">Confirmer
+                        </button>
+                        <button type="button"
+                                class="btn pull-right btn-primary mt-3 w-auto"
+                                onclick="rein();">Reinitialiser
+                        </button>
+                        <a type="button"
+                           class="btn pull-right btn-danger ml-3 mt-3 w-auto" href="{{ path('listeDistribution') }}"
+                        >Annuler
+                        </a>
+                        <script>
+                            function rein() {
+                                $('#nom').val("");
+                                $('#des').val("");
+                                $('#liste').val("");
+                            }
+                        </script>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javaScripts %}
+    <script>
+            {% if succes is defined and succes == 1 %}
+        Swal.fire({
+            title: "Opération réussi",
+            text: "Modification effectué avec succès",
+            icon: "success",
+            type:"success"
+        });
+           {% elseif succes is defined and succes == 2 %}
+        Swal.fire({
+            title: "Oops, il y'a une erreur",
+            text: "Nom déjà utilisé",
+            icon: "error",
+            type: "error"
+        });
+        {% elseif succes is defined and succes == 3 %}
+        Swal.fire({
+            title: "Oops, il y'a une erreur",
+            text: "Veuillez remplir les champs nom et abonnée",
+            icon: "error",
+            type: "error"
+        });
+        {% endif %}
+    </script>
+{% endblock %}

@@ -1,0 +1,189 @@
+{% extends "base.html.twig" %}
+
+{% block head %}
+
+    {% block stylesheets %}
+    {% endblock %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Modification contact</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                {# <div class="x_content"> #}
+
+                {# <h5>Rechercher un contact a modifier</h5> #}
+                {# <form class="form-inline m-4"> #}
+                {# <div class="ml-5 form-group"> #}
+                {# <input type="text" id="rech" class="rounded form-control" placeholder="ID contact"> #}
+                {# </div> #}
+                {# <button type="button" onclick="funcRech();" class="ml-5 btn btn-secondary">Rechercher</button> #}
+                {# </form> #}
+                {# <div class="ml-5"> #}
+                {# <p class="text-danger font-weight-bolder ml-5 position-relative" style="margin-top: -10px;" #}
+                {# id="erreurRech"></p> #}
+                {# </div> #}
+                {# </div> #}
+
+
+                <div class="x_content">
+                    <form class="" action="" id="form1" name="form1">
+                        <span class="section">Information personnelle</span>
+                        <div class="field item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3  label-align">Nom<span
+                                        class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6">
+                                <input class="form-control" data-validate-length-range="6"
+                                       data-validate-words="2" name="nom" id="nom" placeholder=""
+                                       value="{{ contacts.nom }}"/>
+                            </div>
+                        </div>
+                        <div class="field item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3  label-align">Telephone<span
+                                        class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6">
+                                <input class="form-control tel" type="tel" id="telephone" name="telephone"
+                                       required='required' data-validate-length-range="8,20"
+                                       value="{{ contacts.telephone }}"/>
+                            </div>
+                        </div>
+                        <div class="field item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3  label-align">Email</label>
+                            <div class="col-md-6 col-sm-6">
+                                <input class="form-control email optional" name="email" id="email"
+                                       type="email" value="{{ contacts.email }}"/></div>
+                        </div>
+                        <div class="field item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3  label-align">Adresse</label>
+                            <div class="col-md-6 col-sm-6">
+                                <input class="form-control optional" id="adresse" name="adresse"
+                                       data-validate-length-range="5,15" type="text" value="{{ contacts.adresse }}"/>
+                            </div>
+                        </div>
+                        <div class="field item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3  label-align">Groupe</label>
+                            <div class="col-md-6 col-sm-6">
+                                {# <input class="form-control optional" id="groupe" name="groupe" #}
+                                {# data-validate-length-range="5,15" type="text" value="{{ contacts.groupe }}"/></div> #}
+                                <select id="groupe" name="groupe"
+                                        class="form-select"
+                                        required>
+                                    <option value="" disabled selected>{{ contacts.groupe }}</option>
+                                    <option value="null">Aucun</option>
+                                    {% for groupe in groupes %}
+                                        <option value="{{ groupe.id }}">{{ groupe.nom }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="ln_solid">
+                            <div class="form-group mt-3">
+                                <div class="col-md-6 offset-md-3">
+                                    <button type='button' onclick="fonct({{ contacts.id }})" class="btn btn-primary">
+                                        Modifier
+                                    </button>
+                                    <button type='reset' class="btn btn-success">Réinitialiser</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javaScripts %}
+    <script>
+        function fonct(id) {
+            var donnees = $("#form1").serialize();
+            $.ajax({
+                url: '/modifierContact/' + id + '/',
+                data: donnees,
+                success: function (data) {
+                    if (data === 1) {
+                        Swal.fire({
+                            title: "Contact modifié",
+                            icon: 'success',
+                            text: "Opération effectuer avec succès.",
+                            type: "success",
+                        });
+                    } else if (data === 2) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Groupe entré non existant",
+                            type: "error",
+                        });
+                    } else if (data === 3) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Syntaxe de l'email incorrect",
+                            type: "error",
+                        });
+                    } else if (data === 4) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Téléphone doit contenir 212 au debut",
+                            type: "error",
+                        });
+                    } else if (data === 5) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Téléphone doit contenir 12 chiffres",
+                            type: "error",
+                        });
+                    } else if (data === 6) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Veuillez remplir le nom et télephone",
+                            type: "error",
+                        });
+                    }
+                },
+                error: function (data) {
+                    Swal.fire({
+                        title: "Oops, il y a une erreur!",
+                        icon: 'error',
+                        text: "Veuillez réessayer ultérieurement.",
+                        type: "error",
+                    });
+                },
+            });
+            // if ($('#nom').val() === "" || $('#telephone').val() === "") {
+            //     $('#reponse').html("Numéro invalide!");
+            //     $('#erreurRech').html("");
+            // }
+            // var idd = $("#rech").val();
+            // $.ajax({
+            //     url: '/modifierContact/' + id + '/',
+            //     data: donnees,
+            //     success: function (data) {
+            //         let contact = data;
+            //
+            //         $('#reponse').html(contact['echec']);
+            //         $('#succes').html(contact['succes']);
+            //     },
+            //     error: function (data) {
+            //         // alert('Champ vide');
+            //     },
+            // });
+        }
+    </script>
+{% endblock %}

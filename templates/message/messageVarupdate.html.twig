@@ -1,0 +1,175 @@
+{% extends "base.html.twig" %}
+
+{% block styleSheets %}
+{% endblock %}
+
+{% block bodytag %}
+    onload="funcCharger();"
+{% endblock %}
+{% block content %}
+    <div class="right_col" role="main">
+        <h3>Message enregistres</h3>
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Modifier le message ayant le nom: {{ message.nom }}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <form method="post" novalidate action="">
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-md-7 ">
+                                <h5 class="offset-4 mt-5"><i class="fa fa-edit"></i> Entrer les composants du message
+                                </h5>
+                                <div class="p-2 rounded w-100" style="border: 2px grey solid">
+                                    <form class="form-horizontal form-label-left">
+                                        <div class="center-margin">
+                                            <div class="form-group">
+                                                <label for="nom">Nom: <span class="required">*</span></label>
+                                                <input type="text" id="nom" name="nom"
+                                                       class="form-control" value="{{ message.nom }}"
+                                                       onkeyup="preview();" onkeydown="preview()" disabled>
+                                            </div>
+                                            <br>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 mt-4 col-sm-12  form-group">
+                                                    <label for="langue">Langue: </label>
+                                                    <select id="langue" name="langue"
+                                                            class="form-select"
+                                                            onchange="preview()">
+                                                        <option value="anglais">Anglais</option>
+                                                        <option value="francais" selected>Francais</option>
+                                                        <option value="arabe">Arabe</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mt-4 col-sm-12  form-group">
+
+                                                    <label for="message1">Contenu
+                                                        :</label>
+                                                    <textarea id="message1"
+
+                                                              class="form-control"
+                                                              name="message1"
+                                                              onkeydown="preview()"
+                                                              onkeyup="preview();"></textarea>
+                                                </div>
+                                                <br/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-5 ">
+                                <h5 class="offset-5 mt-5"><i class="fa fa-clipboard"></i> Apercu
+                                </h5>
+                                <div class="p-2 rounded w-100" style="border: 2px grey solid;">
+                                    <div>
+                                        <form id="demo-form">
+                                            <label for="message">Message: </label>
+                                            <label id="message" required="required"
+                                                   class="form-control overflow-scroll" style="height: 180px;"
+                                                   name="message" readonly>
+                                                <label class="text-left fs-6">Nom: &nbsp;&nbsp;</label><label
+                                                        class="text-left mb-1 fs-5"
+                                                        id="titre"></label>
+                                                <br>
+                                                <label class="text-left fs-6">Langue: &nbsp;&nbsp;</label><label
+                                                        class="text-center mb-1 font-weight-bolder"
+                                                        id="desc"></label>
+                                                <br>
+                                                <label class="text-left fs-6">Contenu: </label><br><label
+                                                        class="text-left font-weight-bolder"
+                                                        id="corps" style="overflow:auto"></label> </label>
+                                            <br/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" onclick="mf({{ message.id }});"
+                                class="btn pull-right btn-success mt-3 w-auto">Confirmer
+                        </button>
+                        <button type="button"
+                                class="btn pull-right btn-primary mt-3 w-auto"
+                                onclick="rein();">Reinitialiser
+                        </button>
+                        <a type="button"
+                           class="btn pull-right btn-danger ml-3 mt-3 w-auto" href="{{ path('messageVariable') }}"
+                        >Annuler
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javaScripts %}
+    <script>
+        function preview() {
+            var nom = $('#nom').val();
+            var lang = $('#langue').val();
+            var mess1 = $('#message1').val();
+            $('#titre').html(nom);
+            $('#desc').html(lang);
+            $('#corps').html(mess1);
+        }
+
+        function rein() {
+            $('#langue').val("");
+            $('#message1').val("");
+            $('#titre').html("");
+            $('#desc').html("");
+            $('#corps').html("");
+        }
+
+        function mf(id) {
+            var nom = $("#nom").val();
+            var langue = $('#langue').val();
+            var message1 = $('#message1').val();
+            $.ajax({
+                url: '/messageVarmodifier/' + id + '/',
+                data: 'nom=' + nom + '&langue=' + langue + '&message1=' + message1,
+                dataType: 'json',
+                async: true,
+                success: function (data) {
+                    if (data === 1) {
+                        Swal.fire({
+                            title: "Message modifié",
+                            icon: 'success',
+                            text: "Opération effectuer avec succès.",
+                            type: "success",
+                        });
+                    } else if (data === 2) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Nom de message déjà utilisé",
+                            type: "error",
+                        });
+                    } else if (data === 3) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Veuillez remplir le nom du message.",
+                            type: "error",
+                        });
+                    }
+                },
+                error: function (data) {
+                    Swal.fire({
+                        title: "Oops, il y a une erreur!",
+                        icon: 'error',
+                        text: "Veuillez réessayer ultérieurement.",
+                        type: "error",
+                    });
+                },
+            });
+        }
+    </script>
+{% endblock %}

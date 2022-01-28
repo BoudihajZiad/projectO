@@ -1,0 +1,98 @@
+{% extends "base.html.twig" %}
+
+{% block styleSheets %}
+{% endblock %}
+
+{% block bodytag %}
+    onload="funcCharger();"
+{% endblock %}
+{% block content %}
+    <div class="right_col" role="main">
+        <h3>Liste de diffusion</h3>
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Ajouter une liste de distribution</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <form method="post">
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="p-2 rounded w-100" style="border: 2px grey solid">
+                                    <form class="form-horizontal form-label-left">
+                                        <div class="center-margin">
+                                            <div class="form-group">
+                                                <label class="mt-2" for="nom">Nom: <span class="required">*</span></label>
+                                                <input type="text" id="nom" name="nom"
+                                                       class="form-control">
+                                            </div>
+                                            <br>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 mt-4 col-sm-12  form-group">
+                                                    <label for="des">Description: <span class="required">*</span></label>
+                                                    <input type="text" id="des" name="des"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="col-md-6 mt-4 col-sm-12  form-group">
+                                                    <label for="liste">Abonnee
+                                                        :</label>
+                                                    <textarea id="liste"
+
+                                                              class="form-control"
+                                                              name="liste"></textarea>
+                                                    <p>Entrer la liste separer d'une virgule</p>
+                                                </div>
+                                                <br/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit"
+                                class="btn pull-right btn-success mt-3 w-auto">Confirmer
+                        </button>
+                        <button type="button"
+                                class="btn pull-right btn-primary mt-3 w-auto"
+                                onclick="rein();">Reinitialiser
+                        </button>
+                        <a type="button"
+                           class="btn pull-right btn-danger ml-3 mt-3 w-auto" href="{{ path('listeDistribution') }}"
+                        >Annuler
+                        </a>
+                        <div class="x_content bs-example-popovers">
+
+                            {% if succes != "" and response == "" %}
+                                <script>
+                                    var g =12;
+                                    alert(g);
+                                </script>
+                            {% elseif succes == "" and response != "" %}
+                                <script>
+                                    var g =1;
+                                    alert(g);
+                                </script>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<script>
+    function rein() {
+        $('#nom').val("");
+        $('#des').val("");
+        $('#liste').val("");
+    }
+</script>
+{% endblock %}
+
+{% block javaScripts %}
+
+{% endblock %}

@@ -1,0 +1,853 @@
+{% extends "base.html.twig" %}
+
+{% block styleSheets %}
+{% endblock %}
+
+{% block bodytag %}
+    onload="funsp();"
+{% endblock %}
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h3>Creation campagne</h3>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link align-right"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <form id="bzaf">
+                            <div class="x_content">
+                                {# <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;"> #}
+                                {# <div class="toast" style="position: absolute; top: 0; right: 0;"> #}
+                                {# <div class="toast-header"> #}
+                                {# <img src="..." class="rounded mr-2" alt="..."> #}
+                                {# <strong class="mr-auto">Bootstrap</strong> #}
+                                {# <small>11 mins ago</small> #}
+                                {# <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"> #}
+                                {# <span aria-hidden="true">&times;</span> #}
+                                {# </button> #}
+                                {# </div> #}
+                                {# <div class="toast-body"> #}
+                                {# Hello, world! This is a toast message. #}
+                                {# </div> #}
+                                {# </div> #}
+                                {# </div> #}
+
+                                <!-- Smart Wizard -->
+                                <div id="wizard" class="form_wizard wizard_horizontal">
+                                    <ul class="wizard_steps">
+                                        <li>
+                                            <a href="#step-1">
+                                                <span class="step_no">1</span>
+                                                <span class="step_descr">
+                                              Informations generales
+                                          </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#step-2">
+                                                <span class="step_no">2</span>
+                                                <span class="step_descr">
+                                              Composer un message
+                                          </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#step-3">
+                                                <span class="step_no">3</span>
+                                                <span class="step_descr">
+                                              Ajouter des destinataires
+                                          </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#step-4">
+                                                <span class="step_no">4</span>
+                                                <span class="step_descr">
+                                              Resume
+                                          </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="p-3 h-auto" style="background-color:rgba(211,211,211,0.4)">
+                                        <div id="step-1">
+                                            <form class="form-horizontal form-label-left">
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-md-1 col-sm-1 label-align text-left">Canal</label>
+                                                    <div class="col-md-6 col-sm-6 ">
+                                                        <div id="gender" class="btn-group" data-toggle="buttons">
+                                                            <label class="btn btn-secondary"
+                                                                   data-toggle-class="btn-primary"
+                                                                   data-toggle-passive-class="btn-secondary">
+                                                                <input type="radio" name="canal" id="canal1" value="sms"
+                                                                       class="join-btn" checked> &nbsp; SMS &nbsp;
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-md-1 col-sm-1 label-align text-left">Type
+                                                        de<br>
+                                                        compagne</label>
+                                                    <div class="col-md-6 col-sm-6 ">
+                                                        <div id="gender" class="btn-group" data-toggle="buttons">
+                                                            <label class="btn btn-secondary"
+                                                                   data-toggle-class="btn-primary"
+                                                                   data-toggle-passive-class="btn-secondary">
+                                                                <input type="radio" name="type" id="type1" value="push"
+                                                                       class="join-btn"> &nbsp; Push &nbsp;
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="center-margin">
+                                                    <div class="form-group row">
+                                                        <div class="col-md-4 mt-4 col-sm-12  form-group">
+                                                            <label>Nom de la campagne <span
+                                                                        class="required">*</span></label>
+                                                            <input type="text" id="nomCampagne" name="nomCampagne"
+                                                                   class="form-control">
+                                                            <input type="text" value="" hidden id="idd" name="idd"
+                                                                   class="form-control">
+                                                            <script>
+                                                                var x = Math.floor((Math.random() * 10000000) + 1);
+                                                                document.getElementById("idd").value=x;
+                                                            </script>
+                                                        </div>
+
+                                                        <div class="col-md-4 mt-4 col-sm-12  form-group">
+                                                            <label>Categorie de la campagne</label>
+                                                            <select id="categorie" name="categorie" class="form-select"
+                                                                    required>
+                                                                <option value="promotionnel" selected>Promotionnel
+                                                                </option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-4 mt-4 col-sm-12  form-group">
+                                                            <label for="planification">Planification</label>
+                                                            <select id="planification" name="planification"
+                                                                    class="form-select" required>
+                                                                <option value="une" selected>Une fois</option>
+                                                                <option value="periode">Periodiquement</option>
+                                                                <option value="date">Date specifique</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="center-margin">
+                                                    <div class="form-group row">
+                                                        <div class="col-md-7 mt-8 col-sm-7  form-group">
+                                                            <label>Description de la campagne</label>
+                                                            <input type="text" id="descriptionCampagne"
+                                                                   name="descriptionCampagne"
+                                                                   class="form-control">
+                                                            <br/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-md-4 mt-4 col-sm-12  form-group">
+                                                            <label>Compagne silencieuse</label>
+                                                            <select id="sil" name="sil" class="form-select"
+                                                                    required>
+                                                                <option value="Oui" selected>Silencieuse</option>
+                                                                <option value="Non">Non silencieuse</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div id="step-2">
+                                            <form class="form-horizontal form-label-left">
+                                                <div class="center-margin">
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6 mt-4 col-sm-12 form-group">
+                                                            <label>Categorie promotionnelle <span
+                                                                        class="required">*</span></label>
+                                                            <select id="categorieP" name="categorieP"
+                                                                    class="form-select"
+                                                                    required multiple>
+                                                                <option value="promotionnel" selected>Promotion</option>
+                                                                <option value="prospection">Prospection</option>
+                                                                <option value="information">Information</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-6 mt-4 col-sm-12  form-group">
+                                                            <label for="label">Label emetteur <span
+                                                                        class="required">*</span></label>
+                                                            <select id="label" name="label"
+                                                                    class="form-select" required>
+                                                                <option value="" selected></option>
+                                                                {% for label in labels %}
+                                                                    <option value="{{ label.id }}">{{ label.label }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- start form for validation -->
+                                                <div class="row">
+                                                    <div class="col-md-6 ">
+                                                        <h5 class="offset-4 mt-5"><i class="fa fa-edit"></i> Ecrire un
+                                                            message
+                                                        </h5>
+                                                        <div class="p-2 rounded w-100" style="border: 2px grey solid">
+                                                            <form class="form-horizontal form-label-left">
+                                                                <div class="center-margin">
+                                                                    <div class="form-group row">
+                                                                        <div class="col-md-6 mt-4 col-sm-12  form-group">
+                                                                            <label for="langue">Langue: </label>
+                                                                            <select id="langue" name="langue"
+                                                                                    class="form-select"
+                                                                                    required>
+                                                                                <option value="">Choisissez..</option>
+                                                                                <option value="anglais">Anglais</option>
+                                                                                <option value="francais">Francais
+                                                                                </option>
+                                                                                <option value="arabe">Arabe</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-md-6 mt-4 col-sm-12  form-group">
+
+                                                                            <label for="message1">Message (20 chars min,
+                                                                                100
+                                                                                max)
+                                                                                :</label>
+                                                                            <textarea id="message1" required="required"
+                                                                                      class="form-control"
+                                                                                      name="message"
+                                                                                      data-parsley-trigger="keyup"
+                                                                                      data-parsley-minlength="20"
+                                                                                      data-parsley-maxlength="100"
+                                                                                      data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
+                                                                                      data-parsley-validation-threshold="10"></textarea>
+                                                                        </div>
+                                                                        <label for="langue">Type du contenu<span
+                                                                                    class="required">*</span> : </label>
+                                                                        <select id="typeContenu" name="typeContenu"
+                                                                                class="form-select"
+                                                                                required>
+                                                                            <option value="">Choisissez..</option>
+                                                                            <option value="texteUnicode">Texte/Unicode
+                                                                            </option>
+                                                                            <option value="">..</option>
+                                                                            <option value="">..</option>
+                                                                        </select>
+                                                                        <br/>
+                                                                    </div>
+                                                                    <button type="button"
+                                                                            class="btn offset-5 btn-primary w-25"
+                                                                            onclick="preview();">Confirmer
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 ">
+                                                        <h5 class="offset-5 mt-5"><i class="fa fa-clipboard"></i> Apercu
+                                                        </h5>
+                                                        <div class="p-2 rounded w-100" style="border: 2px grey solid">
+                                                            <form id="demo-form">
+                                                                <label for="message">Message: </label>
+                                                                <label id="message" required="required"
+                                                                       class="form-control overflow-scroll"
+                                                                       style="height: 185px;"
+                                                                       name="message" readonly>
+                                                                    <p class="text-center font-weight-bolder"
+                                                                       id="titre"></p>
+                                                                    <br>
+                                                                    <p id="corps"></p>
+                                                                </label>
+                                                                <br/>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- end form for validations -->
+                                                <h5 class="text-center mt-5"><i class="fa fa-edit"></i> Utiliser un
+                                                    message
+                                                    enregistre
+                                                </h5>
+                                                <div class="p-2 rounded w-100" style="border: 2px grey solid">
+
+                                                    <div class="x_content bs-example-popovers">
+                                                        <div class="alert alert-danger alert-dismissible d-none"
+                                                             id="alertDan"
+                                                             role="alert">
+                                                            <button type="button" class="close"
+                                                                    data-dismiss="alert"
+                                                                    aria-label="Close"><span
+                                                                        aria-hidden="true">×</span>
+                                                            </button>
+                                                            Erreur!! Veuillez entrer un groupe valide
+                                                        </div>
+                                                    </div>
+
+                                                    <p class="text-danger font-weight-bolder offset-1"
+                                                       id="errorlabel"></p>
+                                                    <div class="table-responsive offset-1">
+                                                        <input type="text" id="msgSto" name="msgSto" value="" hidden>
+                                                        <table id="table1"
+                                                               class="table table-striped rounded jambo_table bulk_action"
+                                                               style="width: 90%">
+                                                            <thead>
+                                                            <tr class="headings">
+                                                                <th class="column-title">Langue</th>
+                                                                <th class="column-title">Type</th>
+                                                                <th class="column-title">Message</th>
+                                                                <th class="column-title no-link last"><span
+                                                                            class="nobr">Action</span>
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id="bodyTable">
+                                                            {% for message in messages %}
+                                                                <tr>
+                                                                    <td id="langueMessage">
+                                                                        {{ message.langue }}
+                                                                    </td>
+                                                                    <td id="TypeMessage">
+                                                                        {{ message.type }}
+                                                                    </td>
+                                                                    <td id="messMessage">
+                                                                        {{ message.message }}
+                                                                    </td>
+                                                                    <td id="plus" class=" last">
+                                                                        <a class="btn btn-light"
+                                                                           onclick="funcRetourMsg({{ message.id }});"
+                                                                           id="hplus">Ajouter</a>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <script>
+                                                        function funcRetourMsg(id) {
+                                                            $.ajax({
+                                                                url: '/messageFind/' + id + '/',
+                                                                dataType: 'json',
+                                                                async: true,
+                                                                success: function (data) {
+                                                                    $('#titre').html(data['langue']);
+                                                                    $('#corps').html(data['message']);
+                                                                    $('#msgSto').val(data['id']);
+                                                                },
+                                                                error: function (data) {
+                                                                },
+                                                            });
+                                                        }
+
+                                                    </script>
+                                                </div>
+                                            </form>
+
+                                        </div>
+
+                                        <div id="step-3" style="min-height: 60%;max-height: 100%">
+                                            <p class="fs-4">Ajouter des destinataires</p>
+
+                                            <form class="form-horizontal form-label-left">
+                                                {# <input type="text" id="frfr" name="frf" value="df"> #}
+                                                {# <input type="text" id="gtgt" name="gtg" value="gf"> #}
+                                                <div class="row">
+                                                    {# <div class="col-md-2"> #}
+                                                    {# <a class="fs-6 btn btn-sm" onclick="funcAff4()"><i #}
+                                                    {# class="fa fa-clipboard"></i> <br>Liste de #}
+                                                    {# distribution</a> #}
+                                                    {# </div> #}
+                                                    <div class="col-md-2">
+                                                        <a class="fs-6 btn btn-sm" onclick="funcAff1();"><i
+                                                                    class="fa fa-user"></i> <br>Contacts</a>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a class="fs-6 btn btn-sm" onclick="funcAff2();"><i
+                                                                    class="fa fa-users"></i> <br>Groupe contact</a>
+                                                    </div>
+                                                    {# <div class="col-md-2"> #}
+                                                    {# <a class="fs-6 btn btn-sm" onclick="funcAff3()"><i #}
+                                                    {# class="fa fa-edit"></i> <br>Entrer manuellement</a> #}
+                                                    {# </div> #}
+                                                </div>
+                                                <!-- start form for validation -->
+
+                                                <!-- end form for validations -->
+                                                <div class="p-2 rounded w-100 d-none" id="specdiv1"
+                                                     style="border: 2px grey solid">
+                                                    <h5 class="text-center"><i
+                                                                class="fa fa-user"></i> Utiliser un contact
+                                                    </h5>
+                                                    <br>
+                                                    <div class="card-box table-responsive">
+                                                        {# <table id="table1" #}
+                                                        {# class="table table-striped rounded jambo_table bulk_action" #}
+                                                        {# style="width: 90%"> #}
+                                                        {# <thead> #}
+                                                        {# <tr class="headings"> #}
+                                                        {# <th class="column-title">Nom</th> #}
+                                                        {# <th class="column-title">Telephone</th> #}
+                                                        {# <th class="column-title">Email</th> #}
+                                                        {# <th class="column-title">Adresse</th> #}
+                                                        {# <th class="column-title">Groupe</th> #}
+                                                        {# <th class="column-title no-link last"><span #}
+                                                        {# class="nobr">Action</span> #}
+                                                        {# </th> #}
+                                                        {# </tr> #}
+                                                        {# </thead> #}
+                                                        {# <tbody id="bodyTable1"> #}
+                                                        {# {% for contact in contacts %} #}
+                                                        {# <tr> #}
+                                                        {# <td id="nomContact"> #}
+                                                        {# {{ contact.nom }} #}
+                                                        {# </td> #}
+                                                        {# <td id="telephoneContact"> #}
+                                                        {# {{ contact.telephone }} #}
+                                                        {# </td> #}
+                                                        {# <td id="emailContact"> #}
+                                                        {# {{ contact.email }} #}
+                                                        {# </td> #}
+                                                        {# <td id="adresseContact"> #}
+                                                        {# {{ contact.adresse }} #}
+                                                        {# </td> #}
+                                                        {# <td id="groupeContact"> #}
+                                                        {# {{ contact.groupe }} #}
+                                                        {# </td> #}
+{#                                                         <td id="plus" class=" last"> #}
+{#                                                         <a class="btn-default p-2 btn-light" #}
+{#                                                         style="cursor: pointer" #}
+{#                                                         onclick="funcContact({{ contact.id }});" #}
+{#                                                         id="hplus">Ajouter</a> #}
+{#                                                         </td> #}
+                                                        {# </tr> #}
+                                                        {# {% endfor %} #}
+                                                        {# </tbody> #}
+                                                        {# </table> #}
+
+                                                        <table id="datatable" class="table table-striped table-bordered"
+                                                               style="width:100%">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Nom</th>
+                                                                <th>Telephone</th>
+                                                                <th>Email</th>
+                                                                <th>Adresse</th>
+                                                                <th>Groupe</th>
+                                                                <th><span class="nobr">Action</span></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for contact in contacts %}
+                                                                <tr>
+                                                                    <td>{{ contact.nom }}</td>
+                                                                    <td>{{ contact.telephone }}</td>
+                                                                    <td>{{ contact.email }}</td>
+                                                                    <td>{{ contact.adresse }}</td>
+                                                                    <td>{{ contact.groupe }}</td>
+                                                                    <td id="plus">
+                                                                        <a class="btn-default p-1 btn-light"
+                                                                           style="cursor: pointer" onclick="funcTestPls();"
+                                                                           id="hplus">Ajouter</a>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <script>
+                                                        // function funcTestPls(){
+                                                            $(document).ready(function() {
+                                                                $("#datatable hplus").live("click", function() {
+                                                                    var tr = $(this).closest("tr").remove().clone();
+                                                                    tr.find("hplus")
+                                                                    $("#table_dest tbody").append(tr);
+                                                                });
+
+                                                                $("#table_dest img.move-row").live("click", function() {
+                                                                    var tr = $(this).closest("tr").remove().clone();
+                                                                    tr.find("img.move-row")
+                                                                        .attr("src", "move_image_path.jpg")
+                                                                        .attr("alt", "Move");
+                                                                    $("#table_source tbody").append(tr);
+                                                                });
+                                                            });
+                                                        // }
+                                                    </script>
+                                                </div>
+
+                                                <div class="p-2 rounded w-100 d-none" style="border: 2px grey solid"
+                                                     id="specdiv2">
+                                                    <h5 class="text-center"><i
+                                                                class="fa fa-users"></i> Utiliser un
+                                                        groupe de contacts
+                                                    </h5>
+                                                    <br>
+                                                    <div class="table-responsive offset-1">
+                                                        <table id="table2"
+                                                               class="table table-striped rounded jambo_table bulk_action"
+                                                               style="width: 90%">
+                                                            <thead>
+                                                            <tr class="headings">
+                                                                <th class="column-title">Id</th>
+                                                                <th class="column-title">Nom du groupe</th>
+                                                                </th>
+                                                                <th class="column-title no-link last"><span
+                                                                            class="nobr">Action</span>
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id="bodyTable2">
+                                                            {% for groupe in groupes %}
+                                                                <tr>
+                                                                    <td id="idGroupe">
+                                                                        {{ groupe.id }}
+                                                                    </td>
+                                                                    <td id="nomGroupe">
+                                                                        {{ groupe.nom }}
+                                                                    </td>
+                                                                    <td id="plus" class=" last">
+                                                                        <a class="btn-default p-2 btn-light"
+                                                                           style="cursor: pointer"
+                                                                           onclick="funcGroupeRetour({{ groupe.id }});"
+                                                                           id="hplus">Ajouter</a>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                {# <div class="p-2 rounded w-100 d-none" style="border: 2px grey solid" #}
+                                                {# id="specdiv3"> #}
+                                                {# <h5 class="text-center"><i class="fa fa-edit"></i> Entrer un #}
+                                                {# contact manuellement #}
+                                                {# </h5><br> #}
+                                                {# <div class="table-responsive offset-1"> #}
+                                                {# <form class="" action="" method="post" novalidate> #}
+                                                {# <div class="field item form-group"> #}
+                                                {# <label class="col-form-label col-md-3 col-sm-3  label-align">Nom</label> #}
+                                                {# <div class="col-md-6 col-sm-6"> #}
+                                                {# <input class="form-control" class='optional' #}
+                                                {# name="adresse" #}
+                                                {# data-validate-length-range="5,15" #}
+                                                {# type="text"/> #}
+                                                {# <div class="form-group mt-3"> #}
+                                                {# <div class="col-md-6 offset-md-3"> #}
+                                                {# <button type='button' class="btn btn-info"> #}
+                                                {# Ajouter #}
+                                                {# </button> #}
+                                                {# </div> #}
+                                                {# </div> #}
+                                                {# </div> #}
+                                                {# </div> #}
+                                                {# </form> #}
+                                                {# </div> #}
+                                                {# </div> #}
+
+                                                {# <div class="p-2 rounded w-100 d-none" style="border: 2px grey solid" #}
+                                                {# id="specdiv4"> #}
+                                                {# <h5 class="text-center "><i #}
+                                                {# class="fa fa-clipboard"></i> Utiliser une #}
+                                                {# liste de distribution #}
+                                                {# </h5> #}
+                                                {# <p class="text-center">Contenu</p> #}
+                                                {# </div> #}
+
+                                                <script>
+                                                    function funcContact(id) {
+                                                        $.ajax({
+                                                            url: '/messageAddListeContact/' + id + '/',
+                                                            dataType: 'json',
+                                                            async: true,
+                                                            success: function (data) {
+                                                                $('#er').remove();
+                                                                $('#audu').remove();
+
+                                                                if (data['err'] === "") {
+                                                                    var e = $('<tr class="fs-6"><td id="nomLi"></td>' +
+                                                                        '<td id="typeLi"></td></tr>');
+
+                                                                    $('#nomLi', e).html(data['nom']);
+                                                                    $('#typeLi', e).html(data['type']);
+                                                                    $('#bodbod').append(e);
+                                                                } else {
+                                                                    swal({
+                                                                        icon: "error",
+                                                                        text: "Contact déjà ajouté",
+                                                                        title: "Oops! on a détecté une erreur"
+                                                                    })
+                                                                }
+                                                            },
+                                                            error: function (data) {
+                                                                alert("ERROR!");
+                                                            },
+                                                        });
+                                                    }
+
+                                                    function funcGroupeRetour(id) {
+                                                        $.ajax({
+                                                            url: '/messageAddListeGroupe/' + id + '/',
+                                                            dataType: 'json',
+                                                            async: true,
+                                                            success: function (data) {
+                                                                $('#er').remove();
+                                                                $('#audu').remove();
+
+                                                                if (data['err'] === "") {
+                                                                    var e = $('<tr class="fs-6"><td id="nomLi"></td>' +
+                                                                        '<td id="typeLi"></td></tr>');
+
+                                                                    $('#nomLi', e).html(data['nom']);
+                                                                    $('#typeLi', e).html(data['type']);
+                                                                    $('#bodbod').append(e);
+                                                                } else {
+                                                                    swal({
+                                                                        icon: "error",
+                                                                        text: "Groupe déjà ajouté",
+                                                                        title: "Oops! on a détecté une erreur"
+                                                                    })
+                                                                }
+                                                            },
+                                                            error: function (data) {
+                                                                alert("ERROR!");
+                                                            },
+                                                        });
+                                                    }
+                                                </script>
+                                                <script>
+                                                    function funcAff1() {
+                                                        $('#specdiv2').addClass('d-none');
+                                                        // $('#specdiv3').addClass('d-none');
+                                                        // $('#specdiv4').addClass('d-none');
+                                                        $('#specdiv1').toggleClass('d-none');
+                                                    }
+
+                                                    function funcAff2() {
+                                                        $('#specdiv1').addClass('d-none');
+                                                        // $('#specdiv3').addClass('d-none');
+                                                        // $('#specdiv4').addClass('d-none');
+                                                        $('#specdiv2').toggleClass('d-none');
+                                                    }
+
+                                                    // function funcAff3() {
+                                                    //     $('#specdiv1').addClass('d-none');
+                                                    //     $('#specdiv2').addClass('d-none');
+                                                    //     // $('#specdiv4').addClass('d-none');
+                                                    //     // $('#specdiv3').toggleClass('d-none');
+                                                    // }
+                                                    //
+                                                    // function funcAff4() {
+                                                    //     $('#specdiv1').addClass('d-none');
+                                                    //     $('#specdiv2').addClass('d-none');
+                                                    //     // $('#specdiv3').addClass('d-none');
+                                                    //     // $('#specdiv4').toggleClass('d-none');
+                                                    // }
+                                                </script>
+                                                <hr>
+                                                <h5 class="text-center"><i class="fa fa-list"></i>
+                                                    Liste des destinataires
+                                                </h5>
+                                                <br>
+                                                <div class="table-responsive offset-1">
+                                                    <table id="table3"
+                                                           class="table w-75 table-striped jambo_table bulk_action"
+                                                           style="width: 50%">
+                                                        <thead>
+                                                        <tr class="headings">
+                                                            <th class="column-title">Nom de liste</th>
+                                                            <th class="column-title">Type</th>
+                                                             <th class="column-title no-link last"><span
+                                                             class="nobr">Action</span></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="bodbod">
+{#                                                        <td id="audu" class="text-center" colspan="2">Aucun destinataire#}
+{#                                                            selectionne#}
+{#                                                        </td>#}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <script>
+                                                    function funcTestPls(){
+                                                    // $(document).ready(function() {
+                                                    //     $("#datatable hplus").live("click", function() {
+                                                            var tr = $(this).closest("tr").remove().clone();
+                                                            tr.find("hplus");
+                                                            $("#table_dest tbody").append(tr);
+                                                        // });
+
+                                                        // $("#table3 hplus").live("click", function() {
+                                                        //     var tr = $(this).closest("tr").remove().clone();
+                                                        //     tr.find("img.move-row")
+                                                        //         .attr("src", "move_image_path.jpg")
+                                                        //         .attr("alt", "Move");
+                                                        //     $("#table_source tbody").append(tr);
+                                                        // });
+                                                    // });
+                                                    }
+                                                </script>
+{#                                                <div class="card-box table-responsive">#}
+{#                                                    <table id="datatable" class="table table-striped table-bordered"#}
+{#                                                           style="width:100%">#}
+{#                                                        <thead>#}
+{#                                                        <tr>#}
+{#                                                            <th>Nom de liste</th>#}
+{#                                                            <th>Type</th>#}
+{#                                                            <th><span class="nobr">Action</span></th>#}
+{#                                                        </tr>#}
+{#                                                        </thead>#}
+{#                                                        <tbody>#}
+{#                                                        <tr>#}
+{#                                                            <td></td>#}
+{#                                                            <td></td>#}
+{#                                                            <td></td>#}
+{#                                                        </tr>#}
+{#                                                        </tbody>#}
+{#                                                    </table>#}
+{#                                                </div>#}
+                                            </form>
+                                        </div>
+
+                                        <div id="step-4">
+                                            <form class="form-horizontal form-label-left">
+                                                <div class="form-group row">
+                                                    <div class="col-md-6 col-sm-6 ">
+                                                        <div>
+                                                            <strong>Canal: &nbsp;&nbsp;&nbsp;</strong><label id="lel1"
+                                                                                                             class="form-label">
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <strong>Type: &nbsp;&nbsp;&nbsp;</strong><label id="lel2"
+                                                                                                            class="form-label">
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <strong>Nom de compagne: &nbsp;&nbsp;&nbsp;</strong><label
+                                                                    id="lel3"
+                                                                    class="form-label">
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <strong>Categorie de compagne:
+                                                                &nbsp;&nbsp;&nbsp;</strong><label
+                                                                    id="lel4" class="form-label">
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <strong>Planification: &nbsp;&nbsp;&nbsp;</strong><label
+                                                                    id="lel5"
+                                                                    class="form-label">
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <strong>Description: &nbsp;&nbsp;&nbsp;</strong><label
+                                                                    id="lel6"
+                                                                    class="form-label">
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <strong>Compagne silencieuse:
+                                                                &nbsp;&nbsp;&nbsp;</strong><label
+                                                                    id="lel7" class="form-label">
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <strong>Compagne promotionnelle:
+                                                                &nbsp;&nbsp;&nbsp;</strong><label
+                                                                    id="lel8" class="form-label">
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <strong>label emetteur: &nbsp;&nbsp;&nbsp;</strong><label
+                                                                    id="lel9"
+                                                                    class="form-label">
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <div>
+                                                            <strong>Destinataires: &nbsp;&nbsp;&nbsp;</strong><label
+                                                                    id="lel10"
+                                                                    class="form-label">
+                                                                {% for liste in listes %}
+                                                                    <span class="d-none"
+                                                                          id="listeadD">{{ liste.nom }};</span>
+                                                                {% endfor %}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 ">
+                                                        <h2>Apercu du message</h2>
+                                                        <form id="demo-form">
+                                                            <label for="message">Message: </label>
+                                                            <label id="message" required="required"
+                                                                   class="form-control" style="height: 185px;"
+                                                                   name="message" readonly>
+                                                                <p class="text-center font-weight-bolder"
+                                                                   id="titreR" name="titreR"></p>
+                                                                <br>
+                                                                <p id="corpsR" name="corpsR"></p>
+                                                            </label>
+                                                            <br/>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- End SmartWizard Content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function funsp() {
+            $.ajax({
+                url: '/desdele/',
+                dataType: 'json',
+                async: true,
+                success: function (data) {
+                },
+                error: function (data) {
+                },
+            });
+        }
+    </script>
+    <script>
+        function preview() {
+            var lang = $('#langue').val();
+            var mess1 = $('#message1').val();
+            $('#titre').html(lang);
+            $('#corps').html(mess1);
+        }
+    </script>
+{% endblock %}
+
+{% block javaScripts %}
+
+{% endblock %}

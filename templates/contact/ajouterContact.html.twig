@@ -1,0 +1,151 @@
+{% extends "base.html.twig" %}
+
+{% block head %}
+
+    {% block stylesheets %}
+    {% endblock %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="right_col" role="main">
+       <div class="">
+            <div class="page-title">
+                <div class="title_left mb-3">
+                    <h3>Ajout contact</h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <form class="" action="" id="form1" method="post" novalidate>
+                                <span class="section">Information personnelle</span>
+                                <div class="field item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Nom<span
+                                                class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input class="form-control" data-validate-length-range="6"
+                                               data-validate-words="2" name="nom" placeholder=""
+                                               required="required"/>
+                                    </div>
+                                </div>
+                                <div class="field item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Telephone<span
+                                                class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input class="form-control" type="tel" class='tel' name="telephone"
+                                               required='required' data-validate-length-range="8,20"/></div>
+                                </div>
+                                <div class="field item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Email</label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input class="form-control" name="email" class='email optional'
+                                               type="email"/></div>
+                                </div>
+                                <div class="field item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Adresse</label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input class="form-control" class='optional' name="adresse"
+                                               data-validate-length-range="5,15" type="text"/></div>
+                                </div>
+                                <div class="field item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Groupe</label>
+                                    <div class="col-md-6 col-sm-6">
+{#                                        <input class="form-control" class='optional' name="groupe"#}
+{#                                               data-validate-length-range="5,15" type="text"/></div>#}
+                                        <select id="groupe" name="groupe"
+                                                class="form-select"
+                                                required>
+                                            <option value="" disabled selected></option>
+                                            {% for groupe in groupes %}
+                                                <option value="{{ groupe.id }}">{{ groupe.nom }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="ln_solid">
+                                    <div class="form-group mt-3">
+                                        <div class="col-md-6 offset-md-3">
+                                            <button type='button' onclick="fonct()" class="btn btn-primary">Valider</button>
+                                            <button type='reset' class="btn btn-success">Reinitialiser</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javaScripts %}
+    <script>
+        function fonct() {
+            var donnees = $("#form1").serialize();
+            $.ajax({
+                url: '/AddContact/',
+                data: donnees,
+                success: function (data) {
+                    if (data === 1) {
+                        Swal.fire({
+                            title: "Contact modifié",
+                            icon: 'success',
+                            text: "Opération effectuer avec succès.",
+                            type: "success",
+                        });
+                        location.reload();
+                    } else if (data === 2) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Groupe entré non existant",
+                            type: "error",
+                        });
+                    } else if (data === 3) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Syntaxe de l'email incorrect",
+                            type: "error",
+                        });
+                    } else if (data === 4) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Téléphone doit contenir 212 au debut",
+                            type: "error",
+                        });
+                    } else if (data === 5) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Téléphone doit contenir 12 chiffres",
+                            type: "error",
+                        });
+                    } else if (data === 6) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Veuillez remplir le nom et télephone",
+                            type: "error",
+                        });
+                    }
+                },
+                error: function (data) {
+                    Swal.fire({
+                        title: "Oops, il y a une erreur!",
+                        icon: 'error',
+                        text: "Veuillez réessayer ultérieurement.",
+                        type: "error",
+                    });
+                },
+            });
+        }
+    </script>
+{% endblock %}

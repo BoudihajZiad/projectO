@@ -1,0 +1,320 @@
+{% extends "base.html.twig" %}
+
+{% block styleSheets %}
+{% endblock %}
+
+{% block bodytag %}
+    onload="funcCharger();"
+{% endblock %}
+{% block content %}
+    <div class="right_col" role="main">
+        <h3>Mon profil</h3>
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-md-7 ">
+                            <div class="p-2 rounded w-100" style="border: 2px grey solid">
+                                <form class="form-horizontal form-label-left" id="form1">
+                                    <div class="center-margin">
+                                        <div class="form-group row">
+                                            <div class="col-md-6 mt-1 col-sm-12  form-group">
+                                                <label for="prenom">Prenom <span class="required">*</span>: </label>
+                                                <input type="text" id="prenom" name="prenom"
+                                                       class="form-control" value="{{ clients.prenom }}">
+
+                                                <label class="mt-3" for="email">Identifiant email <span class="required">*</span>: </label>
+                                                <input type="text" id="email" name="email"
+                                                       class="form-control" value="{{ clients.email }}">
+
+                                                <label class="mt-3" for="cnx">Identifiant de connexion: </label>
+                                                <input type="text" id="cnx" name="cnx"
+                                                       class="form-control" value="{{ clients.idConnexion }}"
+                                                       disabled>
+
+                                                <label class="mt-3" for="canal">Canal de notification
+                                                    prefere: </label>
+                                                <select id="canal" name="canal"
+                                                        class="form-select" multiple>
+                                                    <option value="sms" selected>SMS</option>
+                                                </select>
+
+                                                <label class="mt-3" for="langue">Langue de notification
+                                                    prefere: </label>
+                                                <select id="langue" name="langue"
+                                                        class="form-select">
+                                                    <option value="anglais">Anglais</option>
+                                                    <option value="arabe">Arabe</option>
+                                                    <option value="francais" selected>Francais</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mt-1 col-sm-12  form-group">
+                                                <label for="nom">Nom <span class="required">*</span>: </label>
+                                                <input type="text" id="nom" name="nom"
+                                                       class="form-control" value="{{ clients.nom }}">
+
+                                                <label class="mt-3" for="telephone">Telephone <span class="required">*</span>: </label>
+                                                <input type="text" id="telephone" name="telephone"
+                                                       class="form-control" value="{{ clients.tel }}">
+
+                                                <label class="mt-3" for="url">URL du Delivery Report: </label>
+                                                <input type="text" id="url" name="url"
+                                                       class="form-control" value="{{ clients.urlDelivery }}">
+
+                                                <label class="mt-3" for="alert">Alerte statut campagne: </label>
+                                                <select id="alert" name="alert"
+                                                        class="form-select" multiple>
+                                                    <option value="debut">Debut</option>
+                                                    <option value="acheve">Acheve</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group row">
+{#                                                <div class="bs-example-popovers col-md-6 mt-4 col-sm-12  form-group">#}
+{#                                                    <div class="alert alert-success d-none w-100"#}
+{#                                                         role="alert" id="sucId">#}
+{#                                                        <button type="button" class="close" onclick="clo()"#}
+{#                                                                aria-label="Close"><span#}
+{#                                                                    aria-hidden="true">×</span>#}
+{#                                                        </button>#}
+{#                                                        <strong id="msgSu"></strong>#}
+{#                                                    </div>#}
+{#                                                    <div class="alert alert-danger d-none w-100"#}
+{#                                                         role="alert" id="sucEr">#}
+{#                                                        <button type="button" class="close" onclick="clo()"#}
+{#                                                                aria-label="Close"><span#}
+{#                                                                    aria-hidden="true">×</span>#}
+{#                                                        </button>#}
+{#                                                        <strong id="msgEr"></strong><br>Essayer a nouveau.#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <script>#}
+{#                                                    function clo() {#}
+{#                                                        $("#sucId").addClass('d-none');#}
+{#                                                        $("#sucEr").addClass('d-none');#}
+{#                                                    }#}
+{#                                                </script>#}
+                                                <div class="pull-right">
+                                                    <a type="button"
+                                                       class="btn pull-right btn-danger ml-3 mt-3 w-auto"
+                                                       href="{{ path('index') }}"
+                                                    >Annuler
+                                                    </a>
+                                                    <button type="button"
+                                                            onclick="modifierInfo({{ app.session.get('user').id }});"
+                                                            class="btn pull-right btn-success mt-3 w-auto">Appliquer
+                                                    </button>
+                                                </div>
+                                                <br/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-5 ">
+{#                            <div class="p-2 rounded w-100" style="border: 2px grey solid;">#}
+{#                                <div>#}
+{#                                    <form id="demo-form">#}
+{#                                        <div class="co-md-12 text-center">#}
+{#                                            <img src="https://via.placeholder.com/170x160" class="rounded">#}
+{#                                        </div>#}
+{#                                        <div class="col-md-12 text-center">#}
+{#                                            <button type="button"#}
+{#                                                    onclick="modifierPhoto({{ app.session.get('user').id }})"#}
+{#                                                    class="btn center-block btn-primary mt-3 w-auto">Changer photo#}
+{#                                            </button>#}
+{#                                        </div>#}
+{#                                    </form>#}
+{#                                </div>#}
+{#                            </div>#}
+                            <div class="p-2 rounded w-100" style="border: 2px grey solid;">
+                                <form id="demo-form">
+                                    <div class="col-md-12 w-100">
+                                        <label for="Ancienmdp" class="mt-3">Ancien mot de passe: </label>
+                                        <input type="password" id="Ancienmdp" name="Ancienmdp"
+                                               class="form-control">
+
+                                        <label for="mdp" class="mt-3">Mot de passe: </label>
+                                        <input type="password" id="mdp" name="mdp"
+                                               class="form-control">
+
+                                        <label class="mt-3" for="confmdp">Confirmer mot de passe: </label>
+                                        <input type="password" id="confmdp" name="confmdp"
+                                               class="form-control">
+                                    </div>
+{#                                    <div class="bs-example-popovers col-md-12 mt-4 col-sm-12 form-group">#}
+{#                                        <div class="alert alert-success d-none w-100"#}
+{#                                             role="alert" id="nicee">#}
+{#                                            <button type="button" class="close" onclick="cloPa()"#}
+{#                                                    aria-label="Close"><span#}
+{#                                                        aria-hidden="true">×</span>#}
+{#                                            </button>#}
+{#                                            <strong id="msgnicee"></strong>#}
+{#                                        </div>#}
+{#                                        <div class="alert alert-danger d-none w-100"#}
+{#                                             role="alert" id="badd">#}
+{#                                            <button type="button" class="close" onclick="cloPa()"#}
+{#                                                    aria-label="Close"><span#}
+{#                                                        aria-hidden="true">×</span>#}
+{#                                            </button>#}
+{#                                            <strong id="msgbadd"></strong><br>Essayer a nouveau.#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <script>#}
+{#                                        function cloPa() {#}
+{#                                            $("#nicee").addClass('d-none');#}
+{#                                            $("#badd").addClass('d-none');#}
+{#                                        }#}
+{#                                    </script>#}
+                                    <div class="col-md-12 mt-3 text-center">
+                                        <button type="button"
+                                                onclick="modifierPass({{ app.session.get('user').id }})"
+                                                class="btn btn-primary center-block w-auto">Changer
+                                            mot de passe
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javaScripts %}
+    <script>
+        function modifierInfo(id) {
+            donnee = $("#form1").serialize();
+            $.ajax({
+                url: '/modifierInfo/' + id + '/',
+                data: donnee,
+                dataType: 'json',
+                success: function (data) {
+                    let rep = data;
+                    var repEchec = rep['response'];
+                    if(repEchec === 1){
+                        Swal.fire({
+                            title: "Profil modifié",
+                            icon: 'success',
+                            text: "Opération effectuer avec succès.",
+                            type: "success",
+                        });
+                    } else if (repEchec === 2) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Email déjà utilisé",
+                            type: "error",
+                        });
+                    } else if (repEchec === 3) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Syntaxe email incorrect.",
+                            type: "error",
+                        });
+                    } else if (repEchec === 4) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Téléphone doit contenir 212 au debut.",
+                            type: "error",
+                        });
+                    } else if (repEchec === 5) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Téléphone doit contenir 12 chiffres.",
+                            type: "error",
+                        });
+                    } else if (repEchec === 6) {
+                        Swal.fire({
+                            title: "Oops, il y'a une erreur!",
+                            icon: 'error',
+                            text: "Champ obligatoire.",
+                            type: "error",
+                        });
+                    }
+                },
+                error: function (data) {
+                    Swal.fire({
+                        title: "Oops, il y a une erreur!",
+                        icon: 'error',
+                        text: "Veuillez réessayer ultérieurement.",
+                        type: "error",
+                    });
+                },
+            });
+        }
+
+        function modifierPass(id) {
+            ancMdp = $("#Ancienmdp").val();
+            mdp = $("#mdp").val();
+            confmdp = $("#confmdp").val();
+            $.ajax({
+                url: '/modifierPass/' + id + '/',
+                data: 'ancMdp=' + ancMdp +'&mdp=' + mdp + '&confmdp=' + confmdp,
+                dataType: 'json',
+                success: function (data) {
+                    // let repp = data;
+                    var repbadd = data['bad'];
+                   if(repbadd === 1){
+                       Swal.fire({
+                           title: "Mot de passe modifié",
+                           icon: 'success',
+                           text: "Opération effectuer avec succès.",
+                           type: "success",
+                       });
+                   } else if (repbadd === 2) {
+                       Swal.fire({
+                           title: "Oops, il y'a une erreur!",
+                           icon: 'error',
+                           text: "Les mots de passe ne sont pas identiques",
+                           type: "error",
+                       });
+                   } else if (repbadd === 3) {
+                       Swal.fire({
+                           title: "Oops, il y'a une erreur!",
+                           icon: 'error',
+                           text: "Ancien mot de passe incorrect.",
+                           type: "error",
+                       });
+                   } else if (repbadd === 4) {
+                       Swal.fire({
+                           title: "Oops, il y'a une erreur!",
+                           icon: 'error',
+                           text: "Le mot de passe doit avoir au moins 8 caractère.",
+                           type: "error",
+                       });
+                   } else if (repbadd === 5) {
+                       Swal.fire({
+                           title: "Oops, il y'a une erreur!",
+                           icon: 'error',
+                           text: "Champ obligatoire.",
+                           type: "error",
+                       });
+                   }
+                },
+                error: function (data) {
+                    Swal.fire({
+                        title: "Oops, il y a une erreur!",
+                        icon: 'error',
+                        text: "Veuillez réessayer ultérieurement.",
+                        type: "error",
+                    });                },
+            });
+        }
+    </script>
+
+{% endblock %}

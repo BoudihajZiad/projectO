@@ -1,0 +1,177 @@
+{% extends "base.html.twig" %}
+
+{% block head %}
+
+    {% block stylesheets %}
+    {% endblock %}
+
+    {% block javascripts %}
+
+    {% endblock %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="col-md-12 col-sm-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Modification contact</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+
+                    <h5>Rechercher un contact a modifier</h5>
+                    <form class="form-inline m-4">
+                        <div class="ml-5 form-group">
+                            <input type="text" id="rech" class="rounded form-control" placeholder="ID contact">
+                        </div>
+                        <button type="button" onclick="funcRech()" class="ml-5 btn btn-secondary">Rechercher</button>
+                    </form>
+                    <div class="ml-5">
+                        <p class="text-danger font-weight-bolder ml-5 position-relative" style="margin-top: -10px;"
+                           id="reponse"></p>
+                    </div>
+                </div>
+
+
+                <div class="x_content">
+                    <form class="" action="" id="form1" name="form1">
+                        <span class="section">Information personnelle</span>
+                        <div class="field item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3  label-align">Nom</label>
+                            <div class="col-md-6 col-sm-6">
+                                <input class="form-control" data-validate-length-range="6"
+                                       data-validate-words="2" name="nom" id="nom" readonly placeholder=""
+                                       required="required"/>
+                            </div>
+                        </div>
+                        <div class="field item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3  label-align">Telephone</label>
+                            <div class="col-md-6 col-sm-6">
+                                <input class="form-control tel" type="tel" readonly id="telephone" name="telephone"
+                                       required='required' data-validate-length-range="8,20"/>
+                            </div>
+                        </div>
+                        <div class="field item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3  label-align">Email</label>
+                            <div class="col-md-6 col-sm-6">
+                                <input class="form-control email optional" readonly name="email" id="email"
+                                       type="email"/></div>
+                        </div>
+                        <div class="field item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3  label-align">Adresse</label>
+                            <div class="col-md-6 col-sm-6">
+                                <input class="form-control optional" id="adresse" readonly name="adresse"
+                                       data-validate-length-range="5,15" type="text"/></div>
+                        </div>
+                        <div class="field item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3  label-align">Groupe</label>
+                            <div class="col-md-6 col-sm-6">
+                                <input class="form-control optional" id="groupe" readonly name="groupe"
+                                       data-validate-length-range="5,15" type="text"/></div>
+                        </div>
+                        <p class="text-success font-weight-bolder text-center" id="succes"></p>
+                        <div class="ln_solid">
+                            <div class="form-group mt-3">
+                                <div class="col-md-6 offset-md-3">
+                                    <button type='button' id="supp" onclick="valid()" class="btn btn-danger">Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Suppression contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-danger font-weight-bold fs-6">
+                    <i class="fa fa-warning"></i> Etes-vous s&ucirc;r de vouloir supprimer ce message?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="fonct();">Confirmer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function funcRech() {
+            $('#supp').removeAttr('data-bs-toggle', 'modal');
+            $('#supp').removeAttr('data-bs-target', '#staticBackdrop');
+            var id = $("#rech").val();
+            $.ajax({
+                url: '/recherchePourModifier/' + id + '/',
+                data: "id=" + id,
+                dataType: 'json',
+                success: function (data) {
+                    let contact = data;
+                    $('#nom').val(contact['nom']);
+                    $('#telephone').val(contact['telephone']);
+                    $('#email').val(contact['email']);
+                    $('#adresse').val(contact['adresse']);
+                    $('#groupe').val(contact['groupe']);
+                    $('#reponse').html(data);
+                    if ($('#nom').val() !== "" && $('#telephone').val() !== "") {
+                        $('#supp').attr('data-bs-toggle', 'modal');
+                        $('#supp').attr('data-bs-target', '#staticBackdrop');
+                    } else {
+                        $('#reponse').html("Numéro invalide!");
+                    }
+                },
+                error: function (data) {
+                    $('#reponse').html("Champ vide!");
+                },
+            });
+        }
+    </script>
+
+    <script>
+        function valid() {
+            var nomCont = $('#nom').val();
+            var telephoneCont = $('#telephone').val();
+            if (nomCont === "" || telephoneCont === "") {
+                $('#reponse').html("Numéro invalide!");
+            }
+        }
+    </script>
+
+    <script>
+        function fonct() {
+            var idd = $("#rech").val();
+            $.ajax({
+                url: '/supprimerContact/' + idd + '/',
+                data: "id=" + idd,
+                success: function (data) {
+                    $('#reponse').html(data);
+                    $('#nom').val("");
+                    $('#telephone').val("");
+                    $('#email').val("");
+                    $('#adresse').val("");
+                    $('#groupe').val("");
+                },
+                error: function (data) {
+                    alert('not supprimer');
+                },
+            });
+        }
+    </script>
+{% endblock %}
